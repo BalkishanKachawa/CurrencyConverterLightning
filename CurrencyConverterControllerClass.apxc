@@ -23,7 +23,8 @@ public with sharing class CurrencyConverterControllerClass{
         // Send the request, and return a response
         if((sourceCode != null && sourceCode.trim().length() > 0) && (targetCode != null && targetCode.trim().length() > 0))
             res = http.send(req);
-        
+        else
+            return null;
         
         Map<String, Object> response = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
         String text = (String)response.get('Text');
