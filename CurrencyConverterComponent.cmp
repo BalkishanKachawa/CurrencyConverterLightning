@@ -1,0 +1,31 @@
+<aura:component controller="bklightning.CurrencyConverterControllerClass" implements="force:appHostable">
+    <aura:attribute name="countries" type="bklightning.CurrencyInformation__c[]" />
+    <aura:attribute name="message" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <form data-toggle="validator" role="form">
+        
+    	<div class="form-group">
+            <label for="source" class="control-label">Source Country</label>
+            <select class="form-control" id="source" required="required" >
+                <aura:iteration items="{!v.countries}" var="country">
+                    <option value="{!country.bklightning__Code__c}">{!country.bklightning__Country__c}</option>
+                </aura:iteration>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="target" class="control-label">Target Country</label>
+            <select class="form-control" id="target" required="required" >
+                <aura:iteration items="{!v.countries}" var="cont">
+                    <option value="{!cont.bklightning__Code__c}">{!cont.bklightning__Country__c}</option>
+                </aura:iteration>
+            </select>
+        </div>
+        
+        <div class="msg" id="showmsg"><h4>{!v.message}</h4></div>
+        
+        <button type="button" class="btn btn-default" onclick="{!c.calculateCurrency}">Calculate</button>
+    </form>
+</aura:component>
