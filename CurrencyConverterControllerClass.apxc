@@ -1,0 +1,33 @@
+public with sharing class CurrencyConverterControllerClass{
+    
+    @AuraEnabled
+    public static List<CurrencyInformation__c> allCountries() {
+        return [SELECT Id,Name,Code__c, Country__c FROM CurrencyInformation__c];
+    }
+    
+    @AuraEnabled
+    public static String getCurrency(String sourceCode,String targetCode) {
+        String url = 'https://globalcurrencies.xignite.com/xGlobalCurrencies.json/GetRealTimeRate?Symbol=';
+        url += sourceCode+targetCode+'&_token=YOURTOKEN';
+        
+        // Instantiate a new http object
+        Http http = new Http();
+        
+        // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(url);
+        req.setMethod('GET');
+        
+        HttpResponse res = new HttpResponse();
+        
+        // Send the request, and return a response
+        if((sourceCode != null && sourceCode.trim().length() > 0) && (targetCode != null && targetCode.trim().length() > 0))
+            res = http.send(req);
+        
+        
+        Map<String, Object> response = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
+        String text = (String)response.get('Text');
+                
+        return text;
+    }
+}
