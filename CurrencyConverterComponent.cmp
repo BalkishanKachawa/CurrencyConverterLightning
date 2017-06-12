@@ -1,3 +1,4 @@
+<!--created by Sandeep-->
 <aura:component controller="bklightning.CurrencyConverterControllerClass" implements="force:appHostable">
     <aura:attribute name="countries" type="bklightning.CurrencyInformation__c[]" />
     <aura:attribute name="message" type="String" />
